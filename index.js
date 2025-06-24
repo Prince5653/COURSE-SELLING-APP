@@ -1,34 +1,11 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const {userRouter} = require('./routes/user');
+const {courseRouter} = require('./routes/course');
+const {adminRouter} = require("./routes/admin");
+app.use(express.json()); // Important for parsing JSON request bodies
 
-app.post("/user/signup",function (req, res)  {
-    res.json({
-        message: "User signed up successfully"
-    })
-})
-
-app.post("/user/signin", function (req, res) {
-    // Here you would typically check the user's credentials against a database
-    res.json({
-        message: "User logged in successfully"
-    })
-})
-
-app.get("/user/purchases",function(req, res) {
-    res.json({
-
-    })
-})
-
-app.post("/course/purchase",function(req, res) {
-    res.json({
-        message: "Course purchased successfully"
-    })
-})
-
-app.get("/courses" ,function(req, res) {
-    res.json({
-    })
-})
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/admin",adminRouter);
+app.use("/api/v1/course", courseRouter);
 app.listen(3000);
