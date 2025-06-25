@@ -1,6 +1,6 @@
 const { Schema, default: mongoose } = require("mongoose")
 
-const (userSchema) = Schema({
+const userSchema = Schema({
     username: "String",
     password: "String",
 email: "String"
