@@ -1,27 +1,42 @@
-const { Schema, default: mongoose } = require("mongoose")
-
-const userSchema = Schema({
-    username: "String",
-    password: "String",
-email: "String"
+const mongoose = require("mongoose");
+mongoose.connect("mongodb+srv://viper:viper56@cluster0.lm0lcrp.mongodb.net/coursera") 
+const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
+const userSchema = new  Schema({
+    email:{type: String, unique: true, required: true},
+    firstName: String,
+    lastName:String,
+    password: String,
 })
 
-const adminSchema = Schema({
-    username: "String"
+const adminSchema = new Schema({
+     email:{type: String, unique: true, required: true},
+    firstName: String,
+    lastName: String,
+    password: String,
 })
 
-const courseSchema = Schema({
-    name: "String",
-    description: "String",
-    price: "Number"
+const courseSchema = new Schema({
+    title:String,
+    description: String,
+    price: Number,
+    imageUrl: String,
+    creatorId: ObjectId
 })
 
-const purchaseSchema = Schema({
-    userId: "String"
+const purchaseSchema = new Schema({
+    userId: ObjectId,
+    courseId: ObjectId
 })
 
-const userModel= mongoose
-.Model("User", userSchema)
-const adminModel = mongoose.Model("Admin", adminSchema)
-const courseModel = mongoose.Model("Course", courseSchema)
-const purchaseModel = mongoose.Model("Purchase", purchaseSchema)
+const userModel= mongoose.model("User", userSchema)
+const adminModel = mongoose.model("Admin", adminSchema)
+const courseModel = mongoose.model("Course", courseSchema)
+const purchaseModel = mongoose.model("Purchase", purchaseSchema)
+
+module.exports = {
+    userModel,
+    adminModel,
+    courseModel,
+    purchaseModel
+}
