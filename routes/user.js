@@ -31,7 +31,8 @@ userRouter.post("/signin", async function (req, res) {
     // Here you would typically check the user's credentials against a database
    const {email,password} = req.body;
    const user = await userModel.find({
-
+         email: email,
+         password: password
    })
    
     res.json({
