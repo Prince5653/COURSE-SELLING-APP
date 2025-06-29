@@ -30,14 +30,22 @@ userRouter.post("/signup",async function (req, res)  {
 userRouter.post("/signin", async function (req, res) {
     // Here you would typically check the user's credentials against a database
    const {email,password} = req.body;
-   const user = await userModel.find({
+   const user = await userModel.findOne({
          email: email,
          password: password
    })
-   
-    res.json({
-        message: "User logged in successfully"
-    })
+   if(user) {
+       const token = jwt.sign({
+        id: user._id
+       }, JWT_USER_PASSWORD);
+           
+       res.json({
+        token: token})
+   } else {
+       return res.status(401).json({
+           message: "Invalid email or password"
+       });
+    }
 })
 
 userRouter.get("/purchases",function(req, res) {
